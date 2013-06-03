@@ -9,7 +9,7 @@
    {__}   {__}
 #+END_SRC
 
-Install WAL-E, an S3 based WAL-shipping disaster recovery and standby toolkit for PostgreSQL. WAL-E will also help you sleep at night.
+Installs WAL-E, an S3 based WAL-shipping disaster recovery and standby toolkit for PostgreSQL. WAL-E will help you sleep at night.
 
 ** Recipes
 
