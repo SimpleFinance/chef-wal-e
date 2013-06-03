@@ -1,0 +1,87 @@
+* =wal-e=
+
+#+BEGIN_SRC
+      __ __
+     (O/ \O)
+  .  ___|___  ,
+   \[| ::: |]/
+    /\-----/\
+   {__}   {__}
+#+END_SRC
+
+Install WAL-E, an S3 based WAL-shipping disaster recovery and standby toolkit for PostgreSQL. WAL-E will also help you sleep at night.
+
+** Recipes
+
+The default recipe builds and installs WAL-E. It also configures a =runit_service= with an environment directory that sets variables useful for running WAL-E. The service doesn't do anything when run, but a wrapper script is provided to load the environment and run WAL-E commands. This configuration is appropriate for a slave (or for any other system onto which you intend to restore a database).
+
+The cron recipe updates the runit service with a script that runs a full database backup. It also defines a cronjob that executes the backup service task with `sv once` each week. This configuration is appropriate for a database master.
+
+** Attributes
+
+This cookbook sets the following default attributes:
+
+| attribute                   | description                         | default                                          |
+|-----------------------------+-------------------------------------+--------------------------------------------------|
+| =node['wal-e']['repo']=     | path to Git repository              | https://github.com/wal-e/wal-e.git               |
+| =node['wal-e']['path']=     | source installation path            | =/opt/wal-e=                                     |
+| =node['wal-e']['bin']=      | executable installation path        | =/usr/local/bin=                                 |
+| =node['wal-e']['revision']= | Git revision to deploy              | (recent master)                                  |
+| =node['wal-e']['user']=     | user to run as                      | =postgres=                                       |
+| =node['wal-e']['data']=     | path to PostgreSQL data directory   | =node['postgresql']['config']['data_directory']= |
+| =node['wal-e']['bucket']=   | S3 bucket name                      | (no default)                                     |
+| =node['wal-e']['envdir']=   | path to runit environment directory | =#{node['runit']['service_dir']}/wal-e/env=      |
+| =node['wal-e']['env']=      | Hash of environment variables       | (see below)                                      |
+
+The environment Hash can contain any variables that are useful at WAL-E runtime. For example:
+
+| variable              | description                             | default                                        |
+|-----------------------+-----------------------------------------+------------------------------------------------|
+| TMP                   | path to temporary directory             | =/tmp=                                         |
+| PATH                  | shell $PATH including Python executable |                                                |
+| AWS_SECRET_ACCESS_KEY | AWS API secret                          |                                                |
+| AWS_ACCESS_KEY_ID     | AWS API key                             |                                                |
+| WALE_S3_PREFIX        | S3 path                                 | =s3://#{node['wal-e']['bucket']}/#{node.name}= |
+
+The =AWS_*= variables are not needed if the node WAL-E is running on is configured with an IAM instance profile.
+
+This cookbook also overrides the following attributes used by the =postgresql= cookbook:
+
+| attribute                                           | description                                 |
+|-----------------------------------------------------+---------------------------------------------|
+| =node['postgresql']['recovery']['restore_command']= | PostgreSQL WAL recovery command (wal-fetch) |
+| =node['postgresql']['config']['archive_mode']=      | enable PostgreSQL WAL archival              |
+| =node['postgresql']['config']['archive_command']=   | PostgreSQL WAL archival command (wal-push)  |
+| =node['postgresql']['config']['hot_standby']=       | enable PostgreSQL hot standby mode          |
+
+** Requirements
+
+- Ubuntu 10.04+
+- Python 2.6
+
+*** Dependencies
+
+- postgresql
+- libevent
+- build-essential
+- git
+- python
+- runit
+
+** License and Author
+
+Author:: Chris Brentano <chris@simple.com>
+
+Copyright:: 2013-, Simple Finance Technology Corp.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
