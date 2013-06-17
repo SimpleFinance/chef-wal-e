@@ -33,7 +33,7 @@ default['wal-e']['env'] = {
   'WALE_S3_PREFIX' => "s3://#{bucket}/#{node.name}"
 }
 
-default['wal-e']['sensu']['subscribers'] = 'postgresql'
+default['wal-e']['sensu']['subscribers'] = ['postgresql']
 default['wal-e']['sensu']['interval'] = 15
 default['wal-e']['sensu']['additional'] = {}
 
