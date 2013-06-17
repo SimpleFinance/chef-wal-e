@@ -33,6 +33,10 @@ default['wal-e']['env'] = {
   'WALE_S3_PREFIX' => "s3://#{bucket}/#{node.name}"
 }
 
+default['wal-e']['sensu']['subscribers'] = 'postgresql'
+default['wal-e']['sensu']['interval'] = 15
+default['wal-e']['sensu']['additional'] = {}
+
 override['postgresql']['recovery']['restore_command'] = %Q(#{node['wal-e']['bin']}/wal-e wal-fetch "%f" "%p")
 
 override['postgresql']['config']['archive_mode'] = 'on'
