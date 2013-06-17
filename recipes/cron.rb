@@ -21,7 +21,7 @@ svc = resources('runit_service[wal-e]')
 svc.run_template_name 'wal-e-backup'
 
 file '/etc/cron.d/wal-e-backup' do
-  content "13 09 * * 0 #{node['wal-e']['user']} /usr/bin/sv once wal-e\n"
+  content "14 09 * * 0 #{node['wal-e']['user']} /usr/bin/sv once wal-e\n"
   owner 'root'
   group 'root'
   notifies :reload, 'service[cron]'
