@@ -36,6 +36,7 @@ default['wal-e']['env'] = {
 default['wal-e']['sensu']['subscribers'] = ['postgresql']
 default['wal-e']['sensu']['interval'] = 3600
 default['wal-e']['sensu']['additional'] = {}
+default['wal-e']['sensu']['check_handlers'] = ['default']
 
 override['postgresql']['recovery']['restore_command'] = %Q(#{node['wal-e']['bin']}/wal-e wal-fetch "%f" "%p")
 

@@ -19,7 +19,7 @@
 sensu_check 'wal-e-backup-check' do
   command '/usr/local/bin/check-wal-e'
   subscribers node['wal-e']['sensu']['subscribers']
-  handlers ['check']
+  handlers node['wal-e']['sensu']['check_handlers']
   interval node['wal-e']['sensu']['interval']
   additional(node['wal-e']['sensu']['additional'])
 end
