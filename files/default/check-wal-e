@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -- $(wal-e backup-list LATEST | tail -1)
+name=$1
+last_modified=$2
+
+if [ -z "$last_modified" ]; then
+   echo "CRITICAL - `wal-e backup-list` returned no backups"
+   exit 2
+fi
+
+now=$(date +%s)
+last_modified_epoch=$(date --date="$last_modified" +%s)
+diff=$(($now - $last_modified_epoch))
+tolerance=$((60 * 60 * 24 * 7 + (2 * 60 * 60)))
+
+if [ "$diff" -gt "$tolerance" ]; then
+   echo "CRITICAL - wal-e last full backup exceeds tolerance: $last_modified"
+   exit 2
+fi
+
+echo "wal-e last full backup ok: $last_modified"
+exit 0
