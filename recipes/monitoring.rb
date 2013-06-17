@@ -15,21 +15,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe 'wal-e::default'
 
-svc = resources('runit_service[wal-e]')
-svc.run_template_name 'wal-e-backup'
-
-cookbook_file '/usr/local/bin/check-wal-e' do
-  mode '0555'
-  owner 'root'
-  group 'root'
+sensu_check 'wal-e-backup-check' do
+  command '/usr/local/bin/check-wal-e'
+  subscribers node['wal-e']['sensu']['subscribers']
+  handlers node['wal-e']['sensu']['check_handlers']
+  interval node['wal-e']['sensu']['interval']
+  additional(node['wal-e']['sensu']['additional'])
 end
-
-file '/etc/cron.d/wal-e-backup' do
-  content "14 09 * * 0 #{node['wal-e']['user']} /usr/bin/sv once wal-e\n"
-  owner 'root'
-  group 'root'
-  notifies :reload, 'service[cron]'
-end
-

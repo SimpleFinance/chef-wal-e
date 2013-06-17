@@ -1,3 +1,4 @@
+#!/bin/bash
 # Author: Simple Finance <ops@simple.com>
 # License: Apache License, Version 2.0
 #
@@ -15,21 +16,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe 'wal-e::default'
+set -- $(wal-e backup-list LATEST | tail -1)
+name=$1
+last_modified=$2
 
-svc = resources('runit_service[wal-e]')
-svc.run_template_name 'wal-e-backup'
+if [ -z "$last_modified" ]; then
+   echo "CRITICAL - `wal-e backup-list` returned no backups"
+   exit 2
+fi
 
-cookbook_file '/usr/local/bin/check-wal-e' do
-  mode '0555'
-  owner 'root'
-  group 'root'
-end
+now=$(date +%s)
+last_modified_epoch=$(date --date="$last_modified" +%s)
+diff=$(($now - $last_modified_epoch))
+tolerance=$((60 * 60 * 24 * 7 + (2 * 60 * 60)))
 
-file '/etc/cron.d/wal-e-backup' do
-  content "14 09 * * 0 #{node['wal-e']['user']} /usr/bin/sv once wal-e\n"
-  owner 'root'
-  group 'root'
-  notifies :reload, 'service[cron]'
-end
+if [ "$diff" -gt "$tolerance" ]; then
+   echo "CRITICAL - wal-e last full backup exceeds tolerance: $last_modified"
+   exit 2
+fi
 
+echo "wal-e last full backup ok: $last_modified"
+exit 0
