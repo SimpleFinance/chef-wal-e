@@ -3,7 +3,7 @@
   "description": "Installs/Configures chef-wal-e",
   "long_description": "",
   "maintainer": "Simple Finance Technology Corp",
-  "maintainer_email": "chris@simple.com",
+  "maintainer_email": "ops@simple.com",
   "license": "Apache 2.0",
   "platforms": {
   },
@@ -31,5 +31,5 @@
   },
   "recipes": {
   },
-  "version": "0.0.1"
+  "version": "0.1.0"
 }

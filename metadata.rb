@@ -17,10 +17,10 @@
 
 name             "wal-e"
 maintainer       "Simple Finance Technology Corp"
-maintainer_email "chris@simple.com"
+maintainer_email "ops@simple.com"
 license          "Apache 2.0"
 description      "Installs/Configures chef-wal-e"
-version          "0.0.1"
+version          "0.1.0"
 
 depends "postgresql"
 depends "libevent"

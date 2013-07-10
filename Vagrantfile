@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 
-box = ENV['VAGRANT_BOX'] || "opscode_ubuntu-12.04_chef-11.2.0"
+box = ENV['VAGRANT_BOX'] || 'opscode_ubuntu-12.04_provisionerless'
 
 Vagrant.configure('2') do |config|
 
-  config.vm.hostname       = 'wal-e'
-  config.vm.box            = box
-  config.vm.box_url        = "https://opscode-vm.s3.amazonaws.com/vagrant/#{box}.box"
-  config.berkshelf.enabled = true
+  config.vm.hostname          = 'wal-e'
+  config.vm.box               = box
+  config.vm.box_url           = "https://opscode-vm.s3.amazonaws.com/vagrant/#{box}.box"
+  config.omnibus.chef_version = :latest
 
   config.vm.provision :chef_solo do |chef|
     chef.run_list = [
