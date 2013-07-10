@@ -30,6 +30,5 @@ file '/etc/cron.d/wal-e-backup' do
   content "14 09 * * 0 root /usr/bin/sv once wal-e\n"
   owner 'root'
   group 'root'
-  notifies :reload, 'service[cron]'
 end
 
