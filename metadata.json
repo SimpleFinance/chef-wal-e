@@ -1,6 +1,6 @@
 {
   "name": "wal-e",
-  "description": "Installs/Configures chef-wal-e",
+  "description": "Installs/Configures WAL-E, a PostgreSQL backup daemon",
   "long_description": "",
   "maintainer": "Simple Finance Technology Corp",
   "maintainer_email": "ops@simple.com",
@@ -13,7 +13,7 @@
     "build-essential": ">= 0.0.0",
     "git": ">= 0.0.0",
     "python": ">= 0.0.0",
-    "runit": "~> 1.1.0"
+    "runit": ">= 0.0.0"
   },
   "recommendations": {
   },
@@ -31,5 +31,5 @@
   },
   "recipes": {
   },
-  "version": "0.2.0"
+  "version": "1.0.0"
 }
