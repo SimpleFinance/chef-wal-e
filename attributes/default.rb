@@ -22,7 +22,6 @@ default[:wal_e][:path] = '/opt/wal-e'
 default[:wal_e][:bin] = '/usr/local/bin'
 default[:wal_e][:revision] = '2f2a4662550b875a40362fc027d44076b4c04de8'
 default[:wal_e][:user] = 'postgres'
-default[:wal_e][:data] = node[:postgresql][:config][:data_directory]
 default[:wal_e][:bucket] = bucket = 'xxx'
 default[:wal_e][:envdir] = "#{node[:runit][:service_dir]}/wal-e/env"
 default[:wal_e][:env] = {
