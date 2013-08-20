@@ -52,7 +52,7 @@ template "#{node[:wal_e][:bin]}/wal-e" do
   variables(opts)
 end
 
-runit_service :wal_e do
+runit_service 'wal_e' do
   action [:enable, :stop]
   run_template_name 'wal-e-env'
   default_logger true
