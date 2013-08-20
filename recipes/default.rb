@@ -15,6 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+node.normal[:postgresql][:recovery][:restore_command] = %Q(#{node[:wal_e][:bin]}/wal-e wal-fetch "%f" "%p")
+
 include_recipe 'libevent::default'
 include_recipe 'build-essential::default'
 include_recipe 'git::default'
@@ -27,9 +29,9 @@ include_recipe 'runit::default'
   end
 end
 
-deploy_revision node['wal-e']['path'] do
-  repo node['wal-e']['repo']
-  revision node['wal-e']['revision']
+deploy_revision node[:wal_e][:path] do
+  repo node[:wal_e][:repo]
+  revision node[:wal_e][:revision]
   symlink_before_migrate.clear
   keep_releases 0
   before_restart do
@@ -44,16 +46,17 @@ deploy_revision node['wal-e']['path'] do
 end
 
 # Zap Mash/node attr detritus that breaks instance var creation in ERB.
-opts = node['wal-e'].to_hash.reject{|k| k.include?('!')}
-template "#{node['wal-e']['bin']}/wal-e" do
+opts = node[:wal_e].to_hash.reject{|k| k.include?('!')}
+template "#{node[:wal_e][:bin]}/wal-e" do
   mode '00755'
   variables(opts)
 end
 
-runit_service 'wal-e' do
+runit_service :wal_e do
   action [:enable, :stop]
   run_template_name 'wal-e-env'
   default_logger true
-  env(node['wal-e']['env'].dup)
+  env(node[:wal_e][:env].dup)
   options(opts)
 end
+

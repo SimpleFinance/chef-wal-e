@@ -15,6 +15,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+node.normal[:postgresql][:config][:archive_mode] = 'on'
+node.normal[:postgresql][:config][:archive_command] = %Q(#{node[:wal_e][:bin]}/wal-e wal-push "%p")
+node.normal[:postgresql][:config][:hot_standby] = 'on'
+
 include_recipe 'wal-e::default'
 
 svc = resources('runit_service[wal-e]')
