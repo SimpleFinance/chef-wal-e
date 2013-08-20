@@ -20,7 +20,7 @@ maintainer       "Simple Finance Technology Corp"
 maintainer_email "ops@simple.com"
 license          "Apache 2.0"
 description      "Installs/Configures chef-wal-e"
-version          "0.1.0"
+version          "0.2.0"
 
 depends "postgresql"
 depends "libevent"
@@ -28,3 +28,4 @@ depends "build-essential"
 depends "git"
 depends "python"
 depends "runit", "~> 1.1.0"
+
