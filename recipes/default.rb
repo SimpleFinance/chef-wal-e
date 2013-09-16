@@ -15,6 +15,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+if !node[:wal_e][:use_iam]
+  node.default[:wal_e][:env]['AWS_SECRET_ACCESS_KEY'] = 'xxx'
+  node.default[:wal_e][:env]['AWS_ACCESS_KEY_ID'] = 'xxx'
+end
+
+node.default[:wal_e][:env]['WALE_S3_PREFIX'] = "s3://#{node[:wal_e][:bucket]}/#{node.name}"
 node.normal[:postgresql][:recovery][:restore_command] = %Q(#{node[:wal_e][:bin]}/wal-e wal-fetch "%f" "%p")
 
 include_recipe 'libevent::default'
