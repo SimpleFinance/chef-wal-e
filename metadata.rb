@@ -20,7 +20,7 @@ maintainer       "Simple Finance Technology Corp"
 maintainer_email "ops@simple.com"
 license          "Apache 2.0"
 description      "Installs/Configures WAL-E, a PostgreSQL backup daemon"
-version          "1.1.0"
+version          "1.2.0"
 
 depends "postgresql"
 depends "libevent"
