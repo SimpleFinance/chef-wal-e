@@ -22,13 +22,10 @@ default[:wal_e][:path] = '/opt/wal-e'
 default[:wal_e][:bin] = '/usr/local/bin'
 default[:wal_e][:revision] = '2f2a4662550b875a40362fc027d44076b4c04de8'
 default[:wal_e][:user] = 'postgres'
-default[:wal_e][:bucket] = bucket = 'xxx'
+default[:wal_e][:bucket] = 'xxx'
 default[:wal_e][:envdir] = "#{node[:runit][:service_dir]}/wal-e/env"
-default[:wal_e][:env] = {
-  'TMP' => '/tmp',
-  'PATH' => '/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/sbin:/usr/local/bin',
-  'AWS_SECRET_ACCESS_KEY' => 'xxx',
-  'AWS_ACCESS_KEY_ID' => 'xxx',
-  'WALE_S3_PREFIX' => "s3://#{bucket}/#{node.name}"
-}
+default[:wal_e][:use_iam] = false
+
+default[:wal_e][:env]["TMP"] = '/tmp'
+default[:wal_e][:env]["PATH"] = '/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/sbin:/usr/local/bin'
 
