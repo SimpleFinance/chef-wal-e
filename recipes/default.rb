@@ -52,6 +52,7 @@ deploy_revision node[:wal_e][:path] do
 end
 
 # Zap Mash/node attr detritus that breaks instance var creation in ERB.
+node.default[:wal_e][:data] = node[:postgresql][:config][:data_directory]
 opts = node[:wal_e].to_hash.reject{|k| k.include?('!')}
 template "#{node[:wal_e][:bin]}/wal-e" do
   mode '00755'
