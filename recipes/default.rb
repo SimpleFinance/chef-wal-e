@@ -51,6 +51,12 @@ deploy_revision node[:wal_e][:path] do
   end
 end
 
+directory node[:wal_e][:env]["TMP"] do
+  owner node[:wal_e][:user]
+  mode 00644
+  action :create
+end
+
 # Zap Mash/node attr detritus that breaks instance var creation in ERB.
 node.default[:wal_e][:data] = node[:postgresql][:config][:data_directory]
 opts = node[:wal_e].to_hash.reject{|k| k.include?('!')}
