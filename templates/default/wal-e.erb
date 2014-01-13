@@ -20,4 +20,4 @@
 # load the environment and run wal-e
 
 chpst -e <%= @envdir %> <%= @path %>/current/bin/wal-e \
-  <% if @useIam %> --aws-instance-profile <% end %> $*
+  <% if @use_iam %> --aws-instance-profile <% end %> $*
