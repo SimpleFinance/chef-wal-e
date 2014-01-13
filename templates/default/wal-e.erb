@@ -19,4 +19,5 @@
 
 # load the environment and run wal-e
 
-chpst -e <%= @envdir %> <%= @path %>/current/bin/wal-e $*
+chpst -e <%= @envdir %> <%= @path %>/current/bin/wal-e \
+  <% if @useIam %> --aws-instance-profile <% end %> $*
