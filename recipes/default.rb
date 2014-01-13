@@ -40,7 +40,7 @@ deploy_revision node[:wal_e][:path] do
       action :create
     end
 
-    execute "./bin/python ./setup.py install" do
+    execute "./bin/pip install ." do
       cwd release_path
     end
   end
