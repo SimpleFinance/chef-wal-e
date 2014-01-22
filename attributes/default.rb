@@ -18,7 +18,7 @@
 include_attribute 'postgresql'
 
 default[:wal_e][:repo] = 'https://github.com/wal-e/wal-e.git'
-default[:wal_e][:revision] = '2f2a4662550b875a40362fc027d44076b4c04de8'
+default[:wal_e][:revision] = '932f609fe3c9adc1bf5059d4274942f7d47a18d8'
 default[:wal_e][:path] = '/opt/wal-e'
 default[:wal_e][:bin] = '/usr/local/bin'
 default[:wal_e][:user] = 'postgres'
