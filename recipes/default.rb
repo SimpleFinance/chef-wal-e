@@ -33,6 +33,8 @@ end
 deploy_revision node[:wal_e][:path] do
   repo node[:wal_e][:repo]
   revision node[:wal_e][:revision]
+  symlink_before_migrate.clear
+  keep_releases 0
   before_restart do
     python_virtualenv release_path do
       action :create
