@@ -48,7 +48,7 @@ end
 
 directory node[:wal_e][:env]["TMP"] do
   owner node[:wal_e][:user]
-  mode 00644
+  mode 00744
   recursive true
   action :create
 end
